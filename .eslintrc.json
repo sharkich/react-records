@@ -1,0 +1,78 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:@typescript-eslint/recommended",
+        "eslint-config-prettier",
+        "plugin:import/errors",
+        "plugin:import/warnings",
+        "plugin:import/typescript",
+        "plugin:typescript-sort-keys/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 2020,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react",
+        "@typescript-eslint",
+        "eslint-plugin-prettier",
+        "import",
+        "typescript-sort-keys"
+    ],
+    "rules": {
+        "linebreak-style": "off",
+        "prettier/prettier": [
+            "error",
+            {
+                "endOfLine": "auto",
+                "singleQuote": true,
+                "printWidth": 120
+            }
+        ],
+        "react/prop-types": 0,
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/ban-ts-comment": "off",
+        "@typescript-eslint/no-namespace": "off",
+        "@typescript-eslint/no-shadow": ["error"],
+        "no-debugger": "off",
+        "no-shadow": "off",
+        "no-prototype-builtins": "off",
+        "import/no-unresolved": [2, {"commonjs": true, "amd": true}],
+        "import/named": 2,
+        "import/namespace": 2,
+        "import/default": 2,
+        "import/export": 2,
+        "sort-keys": ["off", "asc", {"caseSensitive": true, "natural": false, "minKeys": 2}],
+        "typescript-sort-keys/interface": "error",
+        "typescript-sort-keys/string-enum": "error",
+        "import/extensions": "off",
+        "no-duplicate-imports": ["off", { "includeExports": true }],
+        "react/jsx-sort-props": [2, {
+            "callbacksLast": true,
+            "ignoreCase": true,
+            "noSortAlphabetically": false
+        }]
+    },
+    "settings": {
+        "import/parsers": {
+            "@typescript-eslint/parser": [ ".ts", ".tsx" ]
+        },
+        "react": {
+            "createClass": "createReactClass", // Regex for Component Factory to use,
+            // default to "createReactClass"
+            "pragma": "React",  // Pragma to use, default to "React"
+            "fragment": "Fragment",  // Fragment to use (may be a property of <pragma>), default to "Fragment"
+            "version": "detect" // React version. "detect" automatically picks the version you have installed.
+        }
+    }
+}
