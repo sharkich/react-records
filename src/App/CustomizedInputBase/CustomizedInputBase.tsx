@@ -5,6 +5,7 @@ import InputBase from '@material-ui/core/InputBase';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
+import { Controller, useForm } from 'react-hook-form';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -25,19 +26,49 @@ const useStyles = makeStyles((theme: Theme) =>
       height: 28,
       margin: 4,
     },
+    Form: {
+      margin: theme.spacing(2),
+    },
   })
 );
 
-export const CustomizedInputBase: React.FC = () => {
+interface Props {
+  onAdd: (name: string) => void;
+}
+
+export const CustomizedInputBase: React.FC<Props> = ({ onAdd }: Props) => {
   const classes = useStyles();
 
+  const { handleSubmit, control, setValue } = useForm();
+
+  const onSubmit = (data: { record: string }) => {
+    onAdd(data.record);
+    setValue('record', '');
+  };
+
   return (
-    <Paper className={classes.Root} component="form">
-      <InputBase className={classes.Input} placeholder="Add Records" />
-      <Divider className={classes.Divider} orientation="vertical" />
-      <IconButton aria-label="directions" className={classes.IconButton} color="primary">
-        <AddCircleIcon />
-      </IconButton>
-    </Paper>
+    <form autoComplete="off" className={classes.Form} noValidate onSubmit={handleSubmit(onSubmit)}>
+      <Paper className={classes.Root}>
+        <Controller
+          control={control}
+          defaultValue=""
+          name="record"
+          render={({ onChange, value }) => (
+            <InputBase
+              className={classes.Input}
+              name="record"
+              placeholder="Add Records"
+              value={value}
+              onChange={onChange}
+            />
+          )}
+        />
+        {/**/}
+        <Divider className={classes.Divider} orientation="vertical" />
+        <IconButton aria-label="directions" className={classes.IconButton} color="primary" type="submit">
+          <AddCircleIcon />
+        </IconButton>
+      </Paper>
+    </form>
   );
 };

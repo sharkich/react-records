@@ -7,6 +7,7 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import Switch from '@material-ui/core/Switch';
+import { TimerRecord } from '../TimerRecord.interface';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -17,7 +18,11 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export const RecordsList: React.FC = () => {
+interface Props {
+  records: TimerRecord[];
+}
+
+export const RecordsList: React.FC<Props> = ({ records }: Props) => {
   const classes = useStyles();
   const [checked, setChecked] = React.useState(['wifi']);
 
@@ -36,30 +41,20 @@ export const RecordsList: React.FC = () => {
 
   return (
     <List className={classes.root} subheader={<ListSubheader>Records</ListSubheader>}>
-      <ListItem>
-        <ListItemIcon>1:12</ListItemIcon>
-        <ListItemText id="switch-list-label-wifi" primary="Wi-Fi" />
-        <ListItemSecondaryAction>
-          <Switch
-            checked={checked.indexOf('wifi') !== -1}
-            edge="end"
-            inputProps={{ 'aria-labelledby': 'switch-list-label-wifi' }}
-            onChange={handleToggle('wifi')}
-          />
-        </ListItemSecondaryAction>
-      </ListItem>
-      <ListItem>
-        <ListItemIcon>2:15</ListItemIcon>
-        <ListItemText id="switch-list-label-bluetooth" primary="Bluetooth" />
-        <ListItemSecondaryAction>
-          <Switch
-            checked={checked.indexOf('bluetooth') !== -1}
-            edge="end"
-            inputProps={{ 'aria-labelledby': 'switch-list-label-bluetooth' }}
-            onChange={handleToggle('bluetooth')}
-          />
-        </ListItemSecondaryAction>
-      </ListItem>
+      {records.map(({ id, seconds, name, run }) => (
+        <ListItem key={id}>
+          <ListItemIcon>{seconds}</ListItemIcon>
+          <ListItemText id={id} primary={name} />
+          <ListItemSecondaryAction>
+            <Switch
+              checked={run}
+              edge="end"
+              inputProps={{ 'aria-labelledby': 'switch-list-label-wifi' }}
+              onChange={handleToggle('wifi')}
+            />
+          </ListItemSecondaryAction>
+        </ListItem>
+      ))}
     </List>
   );
 };
