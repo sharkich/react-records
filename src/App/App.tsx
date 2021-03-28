@@ -31,6 +31,11 @@ export const App: React.FC = () => {
     ]);
   };
 
+  const statusHandler = (id: string) => {
+    const _records = records.map((r) => (r.id === id ? { ...r, run: !r.run } : r));
+    setRecords(_records);
+  };
+
   return (
     <Grid container spacing={3}>
       <Grid className={classes.Box} item xs={6}>
@@ -40,7 +45,7 @@ export const App: React.FC = () => {
               React Records
             </Typography>
             <CustomizedInputBase onAdd={addRecordHandler} />
-            <RecordsList records={records} />
+            <RecordsList records={records} onToggle={statusHandler} />
           </>
         </Paper>
       </Grid>

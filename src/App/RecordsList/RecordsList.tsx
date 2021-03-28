@@ -19,25 +19,12 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface Props {
+  onToggle: (id: string) => void;
   records: TimerRecord[];
 }
 
-export const RecordsList: React.FC<Props> = ({ records }: Props) => {
+export const RecordsList: React.FC<Props> = ({ onToggle, records }: Props) => {
   const classes = useStyles();
-  const [checked, setChecked] = React.useState(['wifi']);
-
-  const handleToggle = (value: string) => () => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-
-    setChecked(newChecked);
-  };
 
   return (
     <List className={classes.root} subheader={<ListSubheader>Records</ListSubheader>}>
@@ -50,7 +37,7 @@ export const RecordsList: React.FC<Props> = ({ records }: Props) => {
               checked={run}
               edge="end"
               inputProps={{ 'aria-labelledby': 'switch-list-label-wifi' }}
-              onChange={handleToggle('wifi')}
+              onChange={() => onToggle(id)}
             />
           </ListItemSecondaryAction>
         </ListItem>
